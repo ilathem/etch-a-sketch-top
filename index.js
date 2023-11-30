@@ -34,7 +34,6 @@ function redrawGrid(squaresPerSide) {
             })
             grid[i][j].addEventListener('contextmenu', (e) => {
                 e.preventDefault();
-                console.log('right mouse button clicked');
             })
             grid[i][j].addEventListener('wheel', (e) => {
                 if (e.wheelDelta > 0) {
@@ -61,7 +60,6 @@ function changeLightness(gridNode, direction) {
     const strNextLightness = `${nextLightness}%`;
     gridNode.setAttribute("data-lightness", strNextLightness);
     const hue = gridNode.getAttribute('data-hue');
-    console.log(`hsl(${hue}, 100%, ${strNextLightness})`)
     gridNode.style.backgroundColor = `hsl(${hue}, 100%, ${strNextLightness})`;
 }
 
