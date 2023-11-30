@@ -27,6 +27,7 @@ function redrawGrid(squaresPerSide) {
             grid[i][j].addEventListener('click', (event) => {
                 if (event.button === 0) {
                     console.log('left click pressed');
+                    grid[i][j].style.backgroundColor = getRandomRGB();
                 }
             })
             grid[i][j].addEventListener('contextmenu', (e) => {
@@ -37,6 +38,16 @@ function redrawGrid(squaresPerSide) {
         }
         rootDiv.appendChild(rows[i]);
     }
+}
+
+// credit: https://stackoverflow.com/questions/23095637/how-do-you-get-random-rgb-in-javascript
+function getRandomRGB() {
+    const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+    const r = randomBetween(0, 255);
+    const g = randomBetween(0, 255);
+    const b = randomBetween(0, 255);
+    const rgb = `rgb(${r},${g},${b})`; // Collect all to a css color string
+    return rgb;
 }
 
 redrawGrid(16);
