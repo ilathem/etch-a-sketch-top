@@ -24,6 +24,15 @@ function redrawGrid(squaresPerSide) {
             grid[i][j].addEventListener('mouseover', () => {
                 grid[i][j].classList.add('gridDivHovered')
             })
+            grid[i][j].addEventListener('click', (event) => {
+                if (event.button === 0) {
+                    console.log('left click pressed');
+                }
+            })
+            grid[i][j].addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                console.log('right mouse button clicked');
+            })
             rows[i].appendChild(grid[i][j]);
         }
         rootDiv.appendChild(rows[i]);
