@@ -26,13 +26,19 @@ function redrawGrid(squaresPerSide) {
             })
             grid[i][j].addEventListener('click', (event) => {
                 if (event.button === 0) {
-                    console.log('left click pressed');
                     grid[i][j].style.backgroundColor = getRandomRGB();
                 }
             })
             grid[i][j].addEventListener('contextmenu', (e) => {
                 e.preventDefault();
                 console.log('right mouse button clicked');
+            })
+            grid[i][j].addEventListener('wheel', (e) => {
+                if (e.wheelDelta > 0) {
+                    console.log('scrolled up');
+                } else {
+                    console.log('scrolled down');
+                }
             })
             rows[i].appendChild(grid[i][j]);
         }
