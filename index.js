@@ -26,7 +26,10 @@ function redrawGrid(squaresPerSide) {
             })
             grid[i][j].addEventListener('click', (event) => {
                 if (event.button === 0) {
-                    grid[i][j].style.backgroundColor = getRandomRGB();
+                    const randomHue = getRandomHue();
+                    grid[i][j].style.backgroundColor = `hsl(${randomHue}, 100%, 50%)`;
+                    grid[i][j].setAttribute("data-lightness", "50%");
+                    grid[i][j].setAttribute("data-hue", randomHue);
                 }
             })
             grid[i][j].addEventListener('contextmenu', (e) => {
@@ -35,9 +38,9 @@ function redrawGrid(squaresPerSide) {
             })
             grid[i][j].addEventListener('wheel', (e) => {
                 if (e.wheelDelta > 0) {
-                    console.log('scrolled up');
+                    changeLightness(grid[i][j], "up");
                 } else {
-                    console.log('scrolled down');
+                    changeLightness(grid[i][j], "down");
                 }
             })
             rows[i].appendChild(grid[i][j]);
@@ -46,14 +49,26 @@ function redrawGrid(squaresPerSide) {
     }
 }
 
+function changeLightness(gridNode, direction) {
+    const prevLightness = gridNode.getAttribute("data-lightness") ?? "50%";
+    let nextLightness
+    if (direction === "up") {
+        nextLightness = parseFloat(prevLightness) + 5;
+    } else if (direction === "down") {
+        nextLightness = parseFloat(prevLightness) - 5;
+    }
+    if (nextLightness > 50) nextLightness = 50;
+    const strNextLightness = `${nextLightness}%`;
+    gridNode.setAttribute("data-lightness", strNextLightness);
+    const hue = gridNode.getAttribute('data-hue');
+    console.log(`hsl(${hue}, 100%, ${strNextLightness})`)
+    gridNode.style.backgroundColor = `hsl(${hue}, 100%, ${strNextLightness})`;
+}
+
 // credit: https://stackoverflow.com/questions/23095637/how-do-you-get-random-rgb-in-javascript
-function getRandomRGB() {
+function getRandomHue() {
     const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
-    const r = randomBetween(0, 255);
-    const g = randomBetween(0, 255);
-    const b = randomBetween(0, 255);
-    const rgb = `rgb(${r},${g},${b})`; // Collect all to a css color string
-    return rgb;
+    return randomBetween(0, 360);
 }
 
 redrawGrid(16);
