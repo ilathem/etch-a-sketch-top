@@ -21,15 +21,15 @@ function redrawGrid(squaresPerSide) {
         for (let j = 0; j < squaresPerSide; j++) {
             grid[i][j] = document.createElement('div')
             grid[i][j].classList.add('gridDiv');
-            grid[i][j].addEventListener('mouseover', () => {
+            grid[i][j].addEventListener('mouseover', (event) => {
                 grid[i][j].classList.add('gridDivHovered')
+                if (event.buttons === 1) {
+                    addRandomBackground(grid[i][j]);
+                }
             })
-            grid[i][j].addEventListener('click', (event) => {
+            grid[i][j].addEventListener('mousedown', (event) => {
                 if (event.button === 0) {
-                    const randomHue = getRandomHue();
-                    grid[i][j].style.backgroundColor = `hsl(${randomHue}, 100%, 50%)`;
-                    grid[i][j].setAttribute("data-lightness", "50%");
-                    grid[i][j].setAttribute("data-hue", randomHue);
+                    addRandomBackground(grid[i][j]);
                 }
             })
             grid[i][j].addEventListener('contextmenu', (e) => {
@@ -46,6 +46,13 @@ function redrawGrid(squaresPerSide) {
         }
         rootDiv.appendChild(rows[i]);
     }
+}
+
+function addRandomBackground(gridNode) {
+    const randomHue = getRandomHue();
+    gridNode.style.backgroundColor = `hsl(${randomHue}, 100%, 50%)`;
+    gridNode.setAttribute("data-lightness", "50%");
+    gridNode.setAttribute("data-hue", randomHue);
 }
 
 function changeLightness(gridNode, direction) {

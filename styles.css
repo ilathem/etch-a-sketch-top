@@ -1,6 +1,7 @@
 * {
     margin: 0;
     box-sizing: border-box;
+    user-select: none;
 }
 
 #root {
@@ -8,6 +9,12 @@
     flex-direction: column;
     width: 100%;
     height: 98vh;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .rowDiv {
